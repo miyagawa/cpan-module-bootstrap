@@ -1,0 +1,23 @@
+#!/bin/bash
+
+echo "---> Creating carton bootstrap bundle"
+perl -v
+
+echo "---> Checking if you have OrePAN2"
+cpanm OrePAN2
+
+mkdir ./bootstrap
+
+echo "---> Installing Carton and its dependencies"
+cpanm -L ./local --save-dists ./bootstrap/cache --notest Carton
+
+echo "---> Creating CPAN mirror out of cache"
+orepan2-indexer ./bootstrap/cache
+
+echo "---> Copying cpanm and bootstrap script"
+cp $(perldoc -l cpanm) ./bootstrap
+cp ./bootstrap.sh ./bootstrap/bootstrap
+
+echo "---> All done!"
+echo
+echo "Copy bootstrap to remote, and run bootstrap command from there"
