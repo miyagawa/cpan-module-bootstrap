@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "---> Creating carton bootstrap bundle"
+echo "---> Creating CPAN module bootstrap bundle"
 perl -v
 
 echo "---> Checking if you have OrePAN2"
@@ -8,15 +8,17 @@ cpanm OrePAN2
 
 mkdir ./bootstrap
 
-echo "---> Installing Carton and its dependencies"
-cpanm -L ./local --save-dists ./bootstrap/cache --notest Carton
+echo "---> Installing modules and its dependencies"
+cpanm -L ./local --save-dists ./bootstrap/cache --notest $*
 
 echo "---> Creating CPAN mirror out of cache"
 orepan2-indexer ./bootstrap/cache
 
 echo "---> Copying cpanm and bootstrap script"
+ARGS="$*"
 cp $(perldoc -l cpanm) ./bootstrap
-cp ./bootstrap.sh ./bootstrap/bootstrap
+cat ./bootstrap.sh | perl -nlpe "s/__ARGS__/$ARGS/" > ./bootstrap/bootstrap
+chmod +x ./bootstrap/bootstrap
 
 echo "---> All done!"
 echo
