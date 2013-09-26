@@ -6,20 +6,20 @@ perl -v
 echo "---> Checking if you have OrePAN2"
 cpanm OrePAN2
 
-mkdir ./bootstrap
+mkdir ./bundle
 
 echo "---> Installing modules and its dependencies"
-cpanm -L ./local --save-dists ./bootstrap/cache --notest $*
+cpanm -L ./local --save-dists ./bundle/cache --notest $*
 
 echo "---> Creating CPAN mirror out of cache"
-orepan2-indexer ./bootstrap/cache
+orepan2-indexer ./bundle/cache
 
 echo "---> Copying cpanm and bootstrap script"
 ARGS="$*"
-cp $(perldoc -l cpanm) ./bootstrap
-cat ./bootstrap.sh | perl -nlpe "s/__ARGS__/$ARGS/" > ./bootstrap/bootstrap
-chmod +x ./bootstrap/bootstrap
+cp $(perldoc -l cpanm) ./bundle
+cat ./bootstrap.sh | perl -nlpe "s/__ARGS__/$ARGS/" > ./bundle/bootstrap
+chmod +x ./bundle/bootstrap
 
 echo "---> All done!"
 echo
-echo "Copy bootstrap to remote, and run bootstrap command from there"
+echo "Copy bundle directory to remote, and run bootstrap command from there"

@@ -10,7 +10,7 @@ On a local machine:
 > ./setup Module
 ```
 
-Copy `./bootstrap` directory to a remote machine, then run `./bootstrap` within that directory.
+Copy `./bundle` directory to a remote machine, then run `./bootstrap` within that directory.
 
 ## See Also
 
